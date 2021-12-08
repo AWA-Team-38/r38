@@ -1,6 +1,5 @@
 const { Entity, BaseEntity, PrimaryGeneratedColumn, Column, EntitySchema } = require("typeorm");
-
-module.exports = new EntitySchema({
+const DBUser = new EntitySchema({
     name: "DBUser",
     tableName: "dbusers",
     columns: {
@@ -12,10 +11,25 @@ module.exports = new EntitySchema({
         username: {
             type: "varchar",
             nullable: false,
+            unique: true,
         },
         password: {
             type: "varchar",
             nullable: false,
         },
+    },
+    relations: {
+        orders: {
+            target: "Order",
+            type: "one-to-many",
+            cascade: true,
+            joinTable: true,
+            joinColumn: {
+                name: "order_id",
+                referencedColumnName: "id",
+            }
+        },
     }
 })
+
+module.exports = DBUser

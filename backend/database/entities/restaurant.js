@@ -29,5 +29,27 @@ module.exports = new EntitySchema({
             type: "varchar",
             nullable: false,
         },
+    },
+    relations: {
+        menus: {
+            target: "Menu",
+            type: "one-to-one",
+            cascade: true,
+            joinTable: true,
+            joinColumn: {
+                name: "menu_id",
+                referencedColumnName: "id",
+            }
+        },
+        orders: {
+            target: "Order",
+            type: "one-to-many",
+            cascade: true,
+            joinTable: true,
+            joinColumn: {
+                name: "order_id",
+                referencedColumnName: "id",
+            }
+        }
     }
 })
