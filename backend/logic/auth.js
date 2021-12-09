@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const secret = "njuosafunjiofafgsweioujnfosjdanu"
 const salt = 10
+const DBUser = require("../database/entities/dbuser")
 
 const login = async(username, password) => {
         // first we have to get the user from the db, secondly we are going to validate the password to see if it matches and lastly we are going to give the user an identifier *// 
@@ -29,10 +30,10 @@ const register = async (username, password) => {
     const connection = await getConnection
     const repository = connection.getRepository(DBUser)
     await repository.save({
-        username, password: hashpassword
+        username, password: hashpassword, isadmin: false
     })
     return { data:"", message: "You have succesfully registered the user"}
 }
 module.exports = {
-    login, register
+    login, register, secret
 }

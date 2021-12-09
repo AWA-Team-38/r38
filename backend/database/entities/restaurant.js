@@ -1,6 +1,5 @@
 const { EntitySchema } = require("typeorm");
-
-module.exports = new EntitySchema({ 
+const Restaurant =  new EntitySchema({ 
     name: "Restaurant",
     tableName: "restaurants",
     columns: {
@@ -25,13 +24,13 @@ module.exports = new EntitySchema({
             type: "varchar",
             nullable: false,
         },
-        pricetypes: {
+        pricetype: {
             type: "varchar",
             nullable: false,
         },
     },
     relations: {
-        menus: {
+        menu: {
             target: "Menu",
             type: "one-to-one",
             cascade: true,
@@ -53,3 +52,5 @@ module.exports = new EntitySchema({
         }
     }
 })
+
+module.exports = Restaurant

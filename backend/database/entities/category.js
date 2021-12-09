@@ -1,7 +1,7 @@
 const { EntitySchema } = require("typeorm");
-const Menu = new EntitySchema({
-    name: "Menu",
-    tableName: "menus",
+const Category = new EntitySchema({
+    name: "Category",
+    tableName: "categories",
     columns: {
         id: {
             primary: true,
@@ -12,23 +12,19 @@ const Menu = new EntitySchema({
             type: "varchar",
             nullable: false,
         },
-        description: {
-            type: "varchar",
-            nullable: true,
-        },
     },
     relations: {
-        categories: {
-            target: "Category",
+        fooditems: {
+            target: "FoodItem",
             type: "one-to-many",
             cascade: true,
             joinTable: true,
             joinColumn: {
-                name: "category_id",
+                name: "food_item_id",
                 referencedColumnName: "id",
             }
         },
     }
 
 })
-module.exports = Menu
+module.exports = Category

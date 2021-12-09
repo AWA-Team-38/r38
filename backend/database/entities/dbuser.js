@@ -17,6 +17,10 @@ const DBUser = new EntitySchema({
             type: "varchar",
             nullable: false,
         },
+        isadmin: {
+            type:"bool",
+            nullable: false,
+        }
     },
     relations: {
         orders: {
