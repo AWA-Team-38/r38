@@ -1,5 +1,5 @@
 const { EntitySchema } = require("typeorm");
-const Order = new EntitySchema({ 
+const Order = new EntitySchema({
     name: "Order",
     tableName: "orders",
     columns: {
@@ -17,18 +17,29 @@ const Order = new EntitySchema({
             nullable: false,
         },
     },
-    relations:{
-    restaurant: {
-        target: "Restaurant",
-        type: "many-to-one",
-        cascade: true,
-        joinTable: true,
-        joinColumn: {
-            name: "restaurant_id",
-            referencedColumnName: "id"
+    relations: {
+        restaurant: {
+            target: "Restaurant",
+            type: "many-to-one",
+            cascade: true,
+            joinTable: true,
+            joinColumn: {
+                name: "restaurant_id",
+                referencedColumnName: "id"
+            }
+        },
+        user: {
+            target: "DBUser",
+            type: "many-to-one",
+            cascade: true,
+            joinTable: true,
+            joinColumn: {
+                name: "user_id",
+                referencedColumnName: "id"
+            }
         }
-    }}
-    
+    }
+
 })
 
 module.exports = Order

@@ -1,5 +1,5 @@
 var express = require('express');
-const { getAdminOrderHistory, getUserOrderHistory, getReceivedOrders, updateStatusAndEstimation } = require('../logic/orders');
+const { getAdminOrderHistory, getUserOrderHistory, getReceivedOrders, updateStatusAndEstimation, confirmOrderDelivered } = require('../logic/orders');
 const { getToken, isAdminRole } = require('../utils/isAdminRole');
 const { isValidStatus } = require('../utils/mapper');
 var router = express.Router();
@@ -23,7 +23,6 @@ router.get('/received', async function (req, res, next) {
         }
     })
 })
-// to do: change date to match database //* 
 router.put('/', async function (req, res, next) {
     getToken(req, res, (userId) => {
         if (isAdminRole(userId)) {
@@ -36,6 +35,13 @@ router.put('/', async function (req, res, next) {
         } else {
             res.sendStatus(401)
         }
+    })
+})
+
+router.put('/order/:orderId', async function (req, res, next) {
+    getToken(req, res, (userId) => {
+        const orderId = req.params.orderId
+        confirmOrderDelivered(orderId, userId)
     })
 })
 
