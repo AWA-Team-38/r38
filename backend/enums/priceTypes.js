@@ -1,7 +1,7 @@
 const PriceTypes = {
-    Low = "Low",
-    Medium = "Medium",
-    High = "High",
+    Low: "Low",
+    Medium: "Medium",
+    High: "High",
 }
 
 Object.freeze(PriceTypes);

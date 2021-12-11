@@ -13,7 +13,7 @@ const Order = new EntitySchema({
             nullable: false,
         },
         estimation: {
-            type: "date",
+            type: "varchar",
             nullable: false,
         },
     },

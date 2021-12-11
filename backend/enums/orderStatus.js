@@ -1,9 +1,9 @@
 const OrderStatus = {
-    Received = "Received",
-    Preparing = "Preparing",
-    Ready_To_Deliver = "Ready To Deliver",
-    Delivering = "Delivering",
-    Delivered = "Delivered",
+    Received: "Received",
+    Preparing: "Preparing",
+    Ready_To_Deliver: "Ready To Deliver",
+    Delivering: "Delivering",
+    Delivered: "Delivered",
 }
 
 Object.freeze(OrderStatus);

@@ -4,7 +4,7 @@ const { getToken, isAdminRole } = require('../utils/isAdminRole');
 const { isValidStatus } = require('../utils/mapper');
 var router = express.Router();
 
-router.get('/orders', async function (req, res, next) {
+router.get('/', async function (req, res, next) {
     getToken(req, res, (userId) => {
         if (isAdminRole(userId)) {
             res.json(getAdminOrderHistory())
@@ -14,7 +14,7 @@ router.get('/orders', async function (req, res, next) {
     })
 });
 
-router.get('/orders/received', async function (req, res, next) {
+router.get('/received', async function (req, res, next) {
     getToken(req, res, (userId) => {
         if (isAdminRole(userId)) {
             res.json(getReceivedOrders())
@@ -24,7 +24,7 @@ router.get('/orders/received', async function (req, res, next) {
     })
 })
 // to do: change date to match database //* 
-router.put('/order', async function (req, res, next) {
+router.put('/', async function (req, res, next) {
     getToken(req, res, (userId) => {
         if (isAdminRole(userId)) {
             const body = req.body

@@ -1,6 +1,8 @@
 const OrderStatus = require("../enums/orderStatus");
+const PriceTypes = require("../enums/priceTypes");
+const RestaurantTypes = require("../enums/restaurantTypes");
 
-const isValidStatus = async (status) => {
+const isValidStatus = (status) => {
     switch (status) {
         case OrderStatus.Received:
             return true
@@ -17,6 +19,34 @@ const isValidStatus = async (status) => {
     }
 }
 
+const isValidPriceType = (priceType) => {
+    switch (priceType) {
+        case PriceTypes.Low:
+            return true
+        case PriceTypes.Medium:
+            return true
+        case PriceTypes.High:
+            return true
+        default: 
+            return false
+    }
+}
+
+const isValidRestaurantType = (restaurantType) => {
+    switch (restaurantType) {
+        case RestaurantTypes.Buffet:
+            return true
+        case RestaurantTypes.Fine_Dining:
+            return true
+        case RestaurantTypes.Fast_Food:
+            return true
+        default: 
+            return false
+    }
+}
+
 module.exports = {
-    isValidStatus
+    isValidStatus,
+    isValidPriceType,
+    isValidRestaurantType
 }
