@@ -21,10 +21,11 @@ const updateCategoryToMenu = async (menuId, category) => {
     const categoryRepository = connection.getRepository(Category)
     const menuRepository = connection.getRepository(Menu)
     const menu = await menuRepository.findOne({
-        id: menuId,
+        where:{
+            id:menuId
+        },
         relations: ["categories"]
     })
-    console.log(menu)
     const newCategory = await categoryRepository.save(category)
     await menuRepository.save({
         ...menu, categories: [...menu.categories, newCategory]

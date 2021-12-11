@@ -29,7 +29,6 @@ const FoodItem = new EntitySchema({
         category: {
             target: "Category",
             type: "many-to-one",
-            cascade: true,
             inverseSide:"fooditems",
             joinTable: true,
             joinColumn: {
