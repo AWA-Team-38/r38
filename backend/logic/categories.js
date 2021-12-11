@@ -3,17 +3,19 @@ const Category = require("../database/entities/category")
 const FoodItem = require("../database/entities/fooditem")
 const Restaurant = require("../database/entities/restaurant")
 const getConnection = require("../utils/getConnection")
-
+/* fix this shit tomorrow */
 const updateProductToCategory = async (categoryId,product) => {
     const connection = await getConnection
     const foodItemRepository = connection.getRepository(FoodItem)
     const categoryRepository = connection.getRepository(Category)
     const category = await categoryRepository.findOne({
-        id:categoryId
+        id:categoryId,
+        relations:["fooditems"]
     })
+    console.log(category)
     const newFoodItem = await foodItemRepository.save(product)
     await categoryRepository.save({
-        ...category,fooditems:newFoodItem
+        ...category,fooditems:[...category.fooditems,newFoodItem]
     })
     return {
         message:"Sucess"

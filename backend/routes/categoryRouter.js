@@ -1,6 +1,7 @@
 var express = require('express');
 const { updateProductToCategory } = require('../logic/categories');
 const { getMenu, updateCategoryToMenu } = require('../logic/menus');
+const { getToken, isAdminRole } = require('../utils/isAdminRole');
 var router = express.Router();
 
 

@@ -20,23 +20,24 @@ const addRestaurant = async (restaurant) => {
         restauranttype: restaurant.restauranttype,
     })
     return {
-        message:"Added to the database",
+        message: "Added to the database",
         data: newRestaurant
     }
 }
-const updateMenuOnRestaurant = async (restaurantId,menu) => {
+const updateMenuOnRestaurant = async (restaurantId, menu) => {
     const connection = await getConnection
     const menuRepository = connection.getRepository(Menu)
     const restaurantRepository = connection.getRepository(Restaurant)
     const restaurant = await restaurantRepository.findOne({
-        id:restaurantId
+        id: restaurantId
     })
     const newMenu = await menuRepository.save(menu)
     await restaurantRepository.save({
-        ...restaurant,menus:newMenu
+        ...restaurant, menu: newMenu
     })
+
     return {
-        message:"Sucess"
+        message: "Sucess"
     }
 }
 

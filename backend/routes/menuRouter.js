@@ -1,5 +1,6 @@
 var express = require('express');
 const { getMenu, updateCategoryToMenu } = require('../logic/menus');
+const { getToken, isAdminRole } = require('../utils/isAdminRole');
 var router = express.Router();
 
 router.get('/menu/:restaurantId', async function (req, res, next) {

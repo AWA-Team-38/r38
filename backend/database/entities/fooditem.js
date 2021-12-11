@@ -1,5 +1,5 @@
 const { EntitySchema } = require("typeorm");
-const FoodItem = new EntitySchema({ 
+const FoodItem = new EntitySchema({
     name: "FoodItem",
     tableName: "fooditem",
     columns: {
@@ -8,7 +8,7 @@ const FoodItem = new EntitySchema({
             type: "int",
             generated: true,
         },
-        price:{
+        price: {
             type: "int",
             nullable: false,
         },
@@ -24,6 +24,19 @@ const FoodItem = new EntitySchema({
             type: "varchar",
             nullable: true,
         },
+    },
+    relations: {
+        category: {
+            target: "Category",
+            type: "many-to-one",
+            cascade: true,
+            inverseSide:"fooditems",
+            joinTable: true,
+            joinColumn: {
+                name: "category_id",
+                referencedColumnName: "id",
+            }
+        }
     }
 
 })

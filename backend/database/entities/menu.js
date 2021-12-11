@@ -21,6 +21,7 @@ const Menu = new EntitySchema({
         categories: {
             target: "Category",
             type: "one-to-many",
+            inverseSide: "menu",
             cascade: true,
             joinTable: true,
             joinColumn: {

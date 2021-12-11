@@ -47,7 +47,7 @@ const Restaurant =  new EntitySchema({
             joinTable: true,
             joinColumn: {
                 name: "order_id",
-                referencedColumnName: "id",
+                referencedColumnName: "id"
             }
         }
     }

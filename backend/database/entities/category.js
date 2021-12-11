@@ -17,14 +17,24 @@ const Category = new EntitySchema({
         fooditems: {
             target: "FoodItem",
             type: "one-to-many",
-            cascade: true,
+            inverseSide:"category",
             joinTable: true,
             joinColumn: {
                 name: "food_item_id",
                 referencedColumnName: "id",
             }
         },
-    }
+        menu: {
+            target: "Menu",
+            type: "many-to-one",
+            inverseSide:"categories",
+            joinTable: true,
+            joinColumn: {
+                name: "menu_id",
+                referencedColumnName: "id"
+            }
+        }
+    }   
 
 })
 module.exports = Category
