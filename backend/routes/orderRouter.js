@@ -1,15 +1,17 @@
 var express = require('express');
-const { getAdminOrderHistory, getUserOrderHistory, getReceivedOrders, updateStatusAndEstimation, confirmOrderDelivered } = require('../logic/orders');
+const { getAdminOrderHistory, getUserOrderHistory, getReceivedOrders, updateStatusAndEstimation, confirmOrderDelivered, createOrder } = require('../logic/orders');
 const { getToken, isAdminRole } = require('../utils/isAdminRole');
 const { isValidStatus } = require('../utils/mapper');
 var router = express.Router();
 
-router.get('/', async function (req, res, next) {
-    getToken(req, res, (userId) => {
+router.get('/', function (req, res, next) {
+    getToken(req, res, async (userId) => {
         if (isAdminRole(userId)) {
-            res.json(getAdminOrderHistory())
+            const result = await getAdminOrderHistory()
+            res.json(result)
         } else {
-            res.json(getUserOrderHistory(userId))
+            const result = await getUserOrderHistory(userId)
+            res.json(result)
         }
     })
 });
@@ -42,6 +44,15 @@ router.put('/order/:orderId', async function (req, res, next) {
     getToken(req, res, (userId) => {
         const orderId = req.params.orderId
         confirmOrderDelivered(orderId, userId)
+    })
+})
+
+router.post('/order/:restaurantId', function (req, res, next) {
+    getToken(req, res, async (userId) => {
+        const restaurantid = req.params.restaurantId
+        const body = req.body.fooditems
+        const order = await createOrder(body,userId,restaurantid)
+        res.json(order)
     })
 })
 

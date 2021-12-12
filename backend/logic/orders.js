@@ -1,5 +1,6 @@
 const DBUser = require("../database/entities/dbuser")
 const Order = require("../database/entities/order")
+const Restaurant = require("../database/entities/restaurant")
 const OrderStatus = require("../enums/orderStatus")
 const getConnection = require("../utils/getConnection")
 
@@ -16,7 +17,9 @@ const getUserOrderHistory = async (userId) => {
 const getAdminOrderHistory = async () => {
     const connection = await getConnection
     const repository = connection.getRepository(Order)
-    const orders = await repository.find()
+    const orders = await repository.find({
+        relations: ["fooditems"]
+    })
     return orders
 }
 
@@ -44,12 +47,40 @@ const confirmOrderDelivered = async (orderId, userId, res) => {
     })
     if (order.user.id = userId) {
         await repository.save({
-            id:orderId,
-            estimation:order.estimation,
-            status:OrderStatus.Delivered
-        }) 
+            id: orderId,
+            estimation: order.estimation,
+            status: OrderStatus.Delivered
+        })
         res.sendStatus(200)
     } else res.sendStatus(401)
+}
+
+const createOrder = async (items, userId, restaurantId) => {
+    const fooditems = items
+    const connection = await getConnection
+    const repository = connection.getRepository(Order)
+    const userRepository = connection.getRepository(DBUser)
+    const restaurantRepository = connection.getRepository(Restaurant)
+    const user = await userRepository.findOne({
+        id: userId
+    })
+    const restaurant = await restaurantRepository.findOne({
+        id: restaurantId
+    })
+    const order = await repository.save({
+        status: OrderStatus.Received,
+        estimation: new Date(new Date().getTime() + 30 * 60000).toString(),
+        fooditems: fooditems,
+        user: user,
+        restaurant: restaurant
+    })
+    return {
+        id: order.id,
+        status: order.status,
+        estimation: order.estimation,
+        fooditems: order.fooditems,
+        restaurant: order.restaurant
+    }
 }
 
 module.exports = {
@@ -57,5 +88,6 @@ module.exports = {
     getAdminOrderHistory,
     getReceivedOrders,
     updateStatusAndEstimation,
-    confirmOrderDelivered
+    confirmOrderDelivered,
+    createOrder
 }

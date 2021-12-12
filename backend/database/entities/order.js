@@ -37,8 +37,26 @@ const Order = new EntitySchema({
                 name: "user_id",
                 referencedColumnName: "id"
             }
+        },
+        fooditems: {
+            target: "FoodItem",
+            type: "many-to-many",
+            cascade: true,
+            joinTable: {
+                name: "orders_fooditems",
+                joinColumn: {
+                    name: "order_id",
+                },
+                inverseJoinColumn: {
+                    name: "fooditem_id",
+                }
+            },
+            inverseSide: "FoodItem"
         }
+
+
     }
+
 
 })
 

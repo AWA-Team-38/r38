@@ -29,14 +29,30 @@ const FoodItem = new EntitySchema({
         category: {
             target: "Category",
             type: "many-to-one",
-            inverseSide:"fooditems",
+            inverseSide: "fooditems",
             joinTable: true,
             joinColumn: {
                 name: "category_id",
                 referencedColumnName: "id",
             }
+        },
+        orders: {
+            target: "Order",
+            type: "many-to-many",
+            cascade: true,
+            joinTable: {
+                name: "orders_fooditems",
+                joinColumn: {
+                    name: "fooditem_id",
+                },
+                inverseJoinColumn: {
+                    name: "order_id",
+                }
+            },
+            inverseSide: "Order"
         }
     }
+
 
 })
 
