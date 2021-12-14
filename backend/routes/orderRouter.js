@@ -43,7 +43,7 @@ router.put('/', async function (req, res, next) {
 router.put('/order/:orderId', async function (req, res, next) {
     getToken(req, res, (userId) => {
         const orderId = req.params.orderId
-        confirmOrderDelivered(orderId, userId)
+        confirmOrderDelivered(orderId, userId, res)
     })
 })
 
@@ -51,7 +51,7 @@ router.post('/order/:restaurantId', function (req, res, next) {
     getToken(req, res, async (userId) => {
         const restaurantid = req.params.restaurantId
         const body = req.body.fooditems
-        const order = await createOrder(body,userId,restaurantid)
+        const order = await createOrder(body, userId, restaurantid)
         res.json(order)
     })
 })

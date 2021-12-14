@@ -42,14 +42,15 @@ const updateStatusAndEstimation = async (order) => {
 const confirmOrderDelivered = async (orderId, userId, res) => {
     const connection = await getConnection
     const repository = connection.getRepository(Order)
-    const order = await repository.find({
+    const order = await repository.findOne({
         id: orderId, relations: ["user"]
-    })
+    }) 
+    order.status = OrderStatus.Delivered
     if (order.user.id = userId) {
         await repository.save({
-            id: orderId,
+            id:order.id,
             estimation: order.estimation,
-            status: OrderStatus.Delivered
+            status: order.status
         })
         res.sendStatus(200)
     } else res.sendStatus(401)
