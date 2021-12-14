@@ -27,15 +27,9 @@ router.post('/restaurant/:restaurantId', async function (req, res, next) {
     getToken(req, res, async (userId) => {
         if (isAdminRole(userId)) {
             const body = req.body
-            const isValidPriceType = isValidPriceType(body.pricetype)
-            const isValidRestaurantType = isValidRestaurantType(body.restauranttype)
-            if (isValidPriceType && isValidRestaurantType) {
-                const restaurantId = req.params.restaurantId
-                const response = await updateMenuOnRestaurant(restaurantId, body)
-                res.json(response)
-            } else {
-                res.sendStatus(400)
-            }
+            const restaurantId = req.params.restaurantId
+            const response = await updateMenuOnRestaurant(restaurantId, body)
+            res.json(response)
         } else {
             res.sendStatus(401)
         }
